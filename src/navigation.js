@@ -1,0 +1,43 @@
+window.addEventListener('DOMContentLoaded', navigator, false);
+window.addEventListener('hashchange', navigator, false);
+
+function navigator() {
+    console.log({ location });
+
+    const hash = location.hash
+
+    if(hash.startsWith('#trends')) {
+        trendsPage();
+    } else if (hash.startsWith('#search=')){
+        searchPage();
+    } else if (hash.startsWith('#movie=')) {
+        movieDetailsPage();
+    } else if (hash.startsWith('#category=')) {
+        categoryPage();
+    } else {
+        homePage();
+    }
+}
+
+function trendsPage () {
+    console.log('TRENDS');
+}
+
+function searchPage () {
+    console.log('SEARCH');
+}
+
+function movieDetailsPage () {
+    console.log('MOVIE');
+}
+
+function categoryPage () {
+    console.log('CATEGORY');
+}
+
+function homePage () {
+    console.log('HOME');
+
+    getTrendingMoviesPreview()
+    getCategoriesPreview()
+}
