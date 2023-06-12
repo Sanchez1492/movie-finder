@@ -39,7 +39,7 @@ async function getCategoriesPreview () {
 
     const categories = data.genres
     categories.forEach(category => {
-        const categoriesContainer = document.querySelector('.categoriesPreview-list')
+        const categoriesPreviewList = document.querySelector('.categoriesPreview-list')
         const categoryContainer = document.createElement('div')
         categoryContainer.classList.add('category-container')
 
@@ -49,7 +49,7 @@ async function getCategoriesPreview () {
         categoryTitle.setAttribute('id', `id${category.id}`)
 
         categoryContainer.appendChild(categoryTitle)
-        categoriesContainer.appendChild(categoryContainer)
+        categoriesPreviewList.appendChild(categoryContainer)
     });
 }
 

@@ -38,6 +38,13 @@ function categoryPage () {
 function homePage () {
     console.log('HOME');
 
+    headerSection.classList.remove('header-container--long')
+    headerSection.style.background = ''
+    arrowBtn.classList.add('inactive')
+    headerTitle.classList.remove('inactive')
+    headerCategoryTitle.classList.add('inactive')
+    searchForm.classList.remove('inactive')
+
     getTrendingMoviesPreview()
     getCategoriesPreview()
 }
