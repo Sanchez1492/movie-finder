@@ -14,9 +14,11 @@ const api = axios.create({
 async function getTrendingMoviesPreview () {
     const { data } = await api('trending/movie/day')
 
+    const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
+    trendingPreviewMoviesContainer.innerHTML = ''
+
     const movies = data.results
     movies.forEach(movie => {
-        const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
 
         const movieContainer = document.createElement('div')
         movieContainer.classList.add('movie-container')
@@ -37,7 +39,10 @@ async function getTrendingMoviesPreview () {
 async function getCategoriesPreview () {
     const { data } = await api('genre/movie/list')
 
+    categoriesPreviewList.innerHTML = ''
+
     const categories = data.genres
+
     categories.forEach(category => {
         const categoriesPreviewList = document.querySelector('.categoriesPreview-list')
         const categoryContainer = document.createElement('div')
@@ -45,6 +50,9 @@ async function getCategoriesPreview () {
 
         const categoryTitle = document.createElement('h3')
         categoryTitle.classList.add('category-title')
+        categoryTitle.addEventListener('click', () => {
+            location.hash = `#category=${category.id}-${category.name}`
+        })
         categoryTitle.innerText = category.name
         categoryTitle.setAttribute('id', `id${category.id}`)
 
@@ -53,3 +61,30 @@ async function getCategoriesPreview () {
     });
 }
 
+async function getMoviesByCategory (id) {
+    const { data } = await api('discover/movie', {
+        params: {
+            with_genres: id
+        }
+    })
+
+    genericSection.innerHTML = ''
+
+    const movies = data.results
+    movies.forEach(movie => {
+
+        const movieContainer = document.createElement('div')
+        movieContainer.classList.add('movie-container')
+
+        const movieImg = document.createElement('img')
+        movieImg.classList.add('movie-img')
+        movieImg.setAttribute('alt', movie.title)
+        movieImg.setAttribute(
+            'src',
+            'https://image.tmdb.org/t/p/w300/' + movie.poster_path
+            )
+
+        movieContainer.appendChild(movieImg)
+        genericSection.appendChild(movieContainer)
+    });
+}
