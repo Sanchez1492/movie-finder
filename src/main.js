@@ -10,14 +10,9 @@ const api = axios.create({
     }
 })
 
+function createMovies (movies, container) {
+    container.innerText = ''
 
-async function getTrendingMoviesPreview () {
-    const { data } = await api('trending/movie/day')
-
-    const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
-    trendingPreviewMoviesContainer.innerHTML = ''
-
-    const movies = data.results
     movies.forEach(movie => {
 
         const movieContainer = document.createElement('div')
@@ -32,16 +27,12 @@ async function getTrendingMoviesPreview () {
             )
 
         movieContainer.appendChild(movieImg)
-        trendingPreviewMoviesContainer.appendChild(movieContainer)
-    });
+        container.appendChild(movieContainer)
+    });    
 }
 
-async function getCategoriesPreview () {
-    const { data } = await api('genre/movie/list')
-
-    categoriesPreviewList.innerHTML = ''
-
-    const categories = data.genres
+function createCategories (categories, container) {
+    container.innerText = ''
 
     categories.forEach(category => {
         const categoriesPreviewList = document.querySelector('.categoriesPreview-list')
@@ -57,8 +48,26 @@ async function getCategoriesPreview () {
         categoryTitle.setAttribute('id', `id${category.id}`)
 
         categoryContainer.appendChild(categoryTitle)
-        categoriesPreviewList.appendChild(categoryContainer)
+        container.appendChild(categoryContainer)
     });
+}
+
+
+async function getTrendingMoviesPreview () {
+    const { data } = await api('trending/movie/day')
+
+    const trendingPreviewMoviesContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
+
+    const movies = data.results
+    
+    createMovies(movies, trendingPreviewMoviesContainer)
+}
+
+async function getCategoriesPreview () {
+    const { data } = await api('genre/movie/list')
+    const categories = data.genres
+
+    createCategories (categories, categoriesPreviewList)
 }
 
 async function getMoviesByCategory (id) {
@@ -68,23 +77,6 @@ async function getMoviesByCategory (id) {
         }
     })
 
-    genericSection.innerHTML = ''
-
     const movies = data.results
-    movies.forEach(movie => {
-
-        const movieContainer = document.createElement('div')
-        movieContainer.classList.add('movie-container')
-
-        const movieImg = document.createElement('img')
-        movieImg.classList.add('movie-img')
-        movieImg.setAttribute('alt', movie.title)
-        movieImg.setAttribute(
-            'src',
-            'https://image.tmdb.org/t/p/w300/' + movie.poster_path
-            )
-
-        movieContainer.appendChild(movieImg)
-        genericSection.appendChild(movieContainer)
-    });
+    createMovies(movies, genericSection)
 }

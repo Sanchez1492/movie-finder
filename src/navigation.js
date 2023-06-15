@@ -31,6 +31,8 @@ function navigator() {
     } else {
         homePage();
     }
+
+    window.scrollTo(0, window.offsetTop)
 }
 
 function trendsPage () {
@@ -105,7 +107,6 @@ function categoryPage () {
     
     const newName = decodeURI(categoryName)
 
-    window.scrollTo(0, window.offsetTop)
     headerCategoryTitle.innerText = newName
     getMoviesByCategory(categoryId)
 }
