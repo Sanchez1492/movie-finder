@@ -9,10 +9,14 @@ searchFormBtn.addEventListener('click', () => {
 
 trendingBtn.addEventListener('click', () => {
     location.hash = '#trends'
+    headerCategoryTitle.classList.remove('inactive')
+    headerCategoryTitle.innerText = 'Trending'
+    getTrendingMovies()
 })
 
 arrowBtn.addEventListener('click', () => {
-    location.hash = '#home'
+    history.back()
+    // location.hash = '#home'
 })
 
 
@@ -94,6 +98,9 @@ function movieDetailsPage () {
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.add('inactive')
     movieDetailSection.classList.remove('inactive')
+
+    const [_, movieId] = location.hash.split('=')
+    getMovieById(movieId)
 }
 
 function categoryPage () {
